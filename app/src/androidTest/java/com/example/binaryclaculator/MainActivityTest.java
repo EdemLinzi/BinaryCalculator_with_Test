@@ -1,6 +1,8 @@
 package com.example.binaryclaculator;
 
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.widget.ListView;
 
 import org.junit.Before;
@@ -68,7 +70,12 @@ public class MainActivityTest {
         onData(anything()).inAdapterView(withId(R.id.list_view)).atPosition(0).onChildView(withId(R.id.button_0)).perform(click());
         onData(anything()).inAdapterView(withId(R.id.list_view)).atPosition(0).onChildView(withId(R.id.button_1)).perform(click());
 
+        activityTestRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
         onView(withId(R.id.textViewFirst)).check(matches(withText("01")));
+
+        activityTestRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 
     }
 
