@@ -70,11 +70,26 @@ public class MainActivityTest {
         onData(anything()).inAdapterView(withId(R.id.list_view)).atPosition(0).onChildView(withId(R.id.button_0)).perform(click());
         onData(anything()).inAdapterView(withId(R.id.list_view)).atPosition(0).onChildView(withId(R.id.button_1)).perform(click());
 
-        activityTestRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
         onView(withId(R.id.textViewFirst)).check(matches(withText("01")));
+    }
+
+    @Test
+    public void instanceState() throws InterruptedException {
+        onData(anything()).inAdapterView(withId(R.id.list_view)).atPosition(0).onChildView(withId(R.id.button_0)).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.list_view)).atPosition(0).onChildView(withId(R.id.button_1)).perform(click());
+
+
+        activityTestRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        Thread.sleep(1000);
+        onView(withId(R.id.textViewFirst)).check(matches(withText("01")));
+        for(int i = 0;i<5;i++) {
+            onData(anything()).inAdapterView(withId(R.id.list_view)).atPosition(0).onChildView(withId(R.id.button_1)).perform(click());
+        }
+
 
         activityTestRule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        Thread.sleep(1000);
+        onView(withId(R.id.textViewFirst)).check(matches(withText("0111111")));
 
 
     }
